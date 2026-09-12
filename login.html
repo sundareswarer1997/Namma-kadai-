@@ -97,12 +97,14 @@
     type="email"
     id="email"
     placeholder="Enter Email"
+    autocomplete="email"
   >
 
   <input
     type="password"
     id="password"
     placeholder="Enter Password"
+    autocomplete="current-password"
   >
 
   <button id="loginBtn">
@@ -120,9 +122,9 @@
 
 <script type="module">
 
-  // ============================
+  // =========================================
   // FIREBASE IMPORT
-  // ============================
+  // =========================================
 
   import { initializeApp }
     from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
@@ -142,92 +144,62 @@
   } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
-  // ============================
+  // =========================================
   // FIREBASE CONFIG
-  // ============================
+  // =========================================
 
   const firebaseConfig = {
-
-    apiKey:
-      "AIzaSyDMkgzEN_387fCguvjiPHo-ZmOAkoa66Ik",
-
-    authDomain:
-      "namma-kadai-8315f.firebaseapp.com",
-
-    databaseURL:
-      "https://namma-kadai-8315f-default-rtdb.asia-southeast1.firebasedatabase.app",
-
-    projectId:
-      "namma-kadai-8315f",
-
-    storageBucket:
-      "namma-kadai-8315f.firebasestorage.app",
-
-    messagingSenderId:
-      "48534972818",
-
-    appId:
-      "1:48534972818:web:485a4682e581507a8a394b",
-
-    measurementId:
-      "G-JECHD0EPPP"
+    apiKey: "AIzaSyDMkgzEN_387fCGuVjiPHo-ZmOAkoa66Ik",
+    authDomain: "namma-kadai-8315f.firebaseapp.com",
+    databaseURL: "https://namma-kadai-8315f-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "namma-kadai-8315f",
+    storageBucket: "namma-kadai-8315f.firebasestorage.app",
+    messagingSenderId: "48534972818",
+    appId: "1:48534972818:web:485a4682e581507a8a394b",
+    measurementId: "G-JECHD0EPPP"
   };
 
 
-  // ============================
-  // FIREBASE START
-  // ============================
+  // =========================================
+  // START FIREBASE
+  // =========================================
 
-  const app =
-    initializeApp(firebaseConfig);
+  let app;
+  let auth;
+  let db;
 
-  const auth =
-    getAuth(app);
+  try {
 
-  const db =
-    getFirestore(app);
+    app = initializeApp(firebaseConfig);
 
+    auth = getAuth(app);
 
-  // ============================
-  // ELEMENTS
-  // ============================
+    db = getFirestore(app);
 
-  const roleBox =
-    document.getElementById("role");
+  } catch (error) {
 
-  const emailBox =
-    document.getElementById("email");
+    console.error("Firebase Start Error:", error);
 
-  const passwordBox =
-    document.getElementById("password");
+    document.getElementById("message").innerText =
+      "❌ Firebase start error";
 
-  const loginBtn =
-    document.getElementById("loginBtn");
-
-  const registerBtn =
-    document.getElementById("registerBtn");
-
-  const message =
-    document.getElementById("message");
-
-
-  // ============================
-  // MESSAGE
-  // ============================
-
-  function showMessage(text, color = "red") {
-
-    message.innerText = text;
-    message.style.color = color;
-
+    document.getElementById("message").style.color = "red";
   }
 
 
-  // ============================
-  // CREATE ACCOUNT
-  // ============================
+  // =========================================
+  // ELEMENTS
+  // =========================================
 
-  registerBtn.addEventListener("click", async () => {
+  const roleBox = document.getElementById("role");
+  const emailBox = document.getElementById("email");
+  const passwordBox = document.getElementById("password");
 
-    const email =
-      emailBox.value.trim
+  const loginBtn = document.getElementById("loginBtn");
+  const registerBtn = document.getElementById("registerBtn");
+
+  const message = document.getElementById("message");
+
+
+  // =========================================
+  // MESSAGE
